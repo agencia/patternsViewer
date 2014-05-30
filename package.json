@@ -1,0 +1,9 @@
+{
+  "name": "Behavioral Patterns",
+  "version": "0.0.1",
+  "description": "Behavioral Patterns on Social Networks",
+  "dependencies": {
+    "express": "4.3.1",
+    "socket.io": "1.0.0"
+  }
+}
