@@ -11,25 +11,64 @@
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
+    </style>    
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
     </style>
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <div id="map-canvas"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
+var map;
+
       var socket = io();
-      $('form').submit(function(){
+function initialize() {
+  var mapOptions = {
+    zoom: 2,
+    center: new google.maps.LatLng(6.0786032,1.1291844)
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+      socket.on('getpin', function(msg){
+            //$('#messages').append($('<li>').text(msg));
+            console.log(msg);
+            var posi = msg.split(",");
+            new google.maps.Marker({
+                position: new google.maps.LatLng(posi[0],posi[1]),
+                map: map,
+                title: 'Hello World!'
+            });
+      });
+  /*var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title: 'Hello World!'
+  });*/
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+    <script>
+      /*$('form').submit(function(){
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
         return false;
       });
       socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
-      });
+      });*/
     </script>
   </body>
 </html>

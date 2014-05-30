@@ -5,10 +5,13 @@ var io = require('socket.io')(http);
 app.get('/', function(req, res){
   res.sendfile('index.html');
 });
+app.get('/addpin', function(req, res){
+  res.sendfile('addpin.html');
+});
 
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+  socket.on('addpin', function(msg){
+    io.emit('getpin', msg);
   });
 });
 
