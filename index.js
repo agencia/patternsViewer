@@ -8,8 +8,10 @@ app.get('/', function(req, res){
 app.get('/addpin', function(req, res){
   res.sendfile('addpin.html');
 });
+
 app.get('/setpin', function(req, res){
   io.emit('getpin', req.query['pin']);
+  console.log("emited: " + req.query['pin']);
 });
 
 io.on('connection', function(socket){
